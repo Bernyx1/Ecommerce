@@ -1,7 +1,7 @@
 const formidable = require('formidable');
 const _ = require('lodash');
 const fs = require('fs');
-const Product = require('../models/products');
+const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.productById = (req, res, next, id) => {
@@ -125,8 +125,8 @@ exports.update = (req, res) => {
 
 /**
  * sell/arrival
- * by sell  = /products?sortBy=sold&order=des$limit=4
- * by arrival=/products?sortBy=createdAt&order=des$limit=4
+ * by sell  = /products?sortBy=sold&order=desc$limit=4
+ * by arrival=/products?sortBy=createdAt&order=desc$limit=4
  * if no params, return all products
  */
 
@@ -135,7 +135,7 @@ exports.list = (req, res) => {
 	let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
 	let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
-	product
+	Product
 		.find()
 		.select('-photo')
 		.populate('category')
@@ -194,7 +194,7 @@ exports.listCategories = (req, res) => {
  */
 
 // route - make sure its post
-router.post('/products/by/search', listBySearch);
+
 
 exports.listBySearch = (req, res) => {
 	let order = req.body.order ? req.body.order : 'desc';
